@@ -35,3 +35,69 @@ The label data is just a list of 10000 numbers in the range 0-9, which correspon
 * **truck**
 
 [X] need to be modified into a new shape
+
+![Screenshot 2021-07-16 at 6 49 59 PM](https://user-images.githubusercontent.com/77450357/125988810-9d3d983c-bdb0-4ba0-b985-9d42c51151d9.png)
+
+### Model Architecture
+![conv_model](https://user-images.githubusercontent.com/77450357/125989106-a0dfcef0-55e5-48ce-a63d-e34113ff1e51.png)
+
+
+The entire model consists of 14 layers in total. In addition to layers below lists what techniques are applied to build the model.
+
+1. Convolution with 64 different filters in size of (3x3)
+2. Max Pooling by 2
+  - ReLU activation function 
+  - Batch Normalization
+3. Convolution with 128 different filters in size of (3x3)
+4. Max Pooling by 2
+  - ReLU activation function 
+  - Batch Normalization
+5. Convolution with 256 different filters in size of (3x3)
+6. Max Pooling by 2
+  - ReLU activation function 
+  - Batch Normalization
+7. Convolution with 512 different filters in size of (3x3)
+8. Max Pooling by 2
+  - ReLU activation function 
+  - Batch Normalization
+9. Flattening the 3-D output of the last convolutional operations.
+10. Fully Connected Layer with 128 units
+  - Dropout 
+  - Batch Normalization
+11. Fully Connected Layer with 256 units
+  - Dropout 
+  - Batch Normalization
+12. Fully Connected Layer with 512 units
+  - Dropout 
+  - Batch Normalization
+13. Fully Connected Layer with 1024 units
+  - Dropout 
+  - Batch Normalization
+14. Fully Connected Layer with 10 units (number of image classes)
+
+the image below decribes how the conceptual convolving operation differs from the tensorflow implementation when you use [Channel x Width x Height] tensor format. 
+
+![convolving](https://user-images.githubusercontent.com/77450357/125989233-480d30e1-6879-4918-9efe-bef4a26d8ff7.png)
+## Train the Neural Network
+
+We have defined cost, optimizer and accuracy, and what they really are is..
+- **cost**:  
+   - tf.reduce_mean returns => The reduced **Tensor**
+- **optimizer**:  
+   - tf.train.AdamOptimizer returns => An **Operation** that applies the specified gradients.
+- **accuracy**: 
+   - tf.reduce_mean returns => The reduced **Tensor**
+
+tf.Session.run method in the official document explains it runs one "step" of TensorFlow computation, by running the necessary graph fragment to execute every Operation and evaluate every Tensor in fetches, substituting the values in feed_dict for the corresponding input values. The fetches argument may be a single graph element, or an arbitrarily nested list, tuple, etc.
+
+Here what graph element really is tf.Tensor or tf.Operation. Cost, Optimizer, and Accuracy are one of those types meaning they can be specified as part of the fetches argument. Then, we can feed some variables along the way. This is kind of handy feature of Tensorflow. Once we have constructed the graph, all we need to do is feeding data into that graph and specifying what results to retrieve.
+
+![training](https://user-images.githubusercontent.com/77450357/125989461-0a9db22c-913a-4d99-b20a-aa17645dba4a.PNG)
+
+## Prediction
+![prediction](https://user-images.githubusercontent.com/77450357/125989548-c92b5caa-7c3d-4fd5-a766-7d6a260bd134.PNG)
+
+
+
+
+
